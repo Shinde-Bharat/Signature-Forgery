@@ -1,135 +1,71 @@
-# Signature Forgery Detection Documentation
-## Video Explaination of the Project : [YouTube Link](https://youtu.be/Lr-kdXCNXko) 
+# ✍️ **Signature Forgery Detection System**  
 
-## Overview
+## 📋 **Overview**  
+The system uses a neural network to detect signature forgery by analyzing features such as ratio, centroid, eccentricity, solidity, skewness, and kurtosis from signature images. It processes genuine and forged signature images, extracts key features, and trains a neural network to classify them.
 
-The provided code implements a signature forgery detection system using a neural network. The system processes signature images, extracts various features from them, and then trains a neural network to distinguish between genuine and forged signatures. The features include ratio, centroid, eccentricity, solidity, skewness, and kurtosis.
+## 🗂️ **Code Structure**  
+### 📦 **Libraries Used:**  
+- 🧮 `numpy` - Numerical operations  
+- 💾 `os` - File handling  
+- 📊 `matplotlib` - Image visualization  
+- 🧩 `scipy.ndimage` - Image processing  
+- 🖼️ `skimage` - Image reading and thresholding  
+- 🤖 `tensorflow` - Neural network training  
+- 🗃️ `pandas` - Data manipulation
 
-## Code Structure
+### 🧩 **Functions:**  
+- 🎨 **`rgbgrey(img)`**: Converts RGB to grayscale  
+- ⚫ **`greybin(img)`**: Converts grayscale to binary  
+- 🖼️ **`preproc(path, img=None, display=True)`**: Preprocesses signature images  
+- 📏 **`Ratio(img)`**: Calculates pixel ratio  
+- 📍 **`Centroid(img)`**: Calculates image centroid  
+- 📐 **`EccentricitySolidity(img)`**: Extracts eccentricity and solidity  
+- 📈 **`SkewKurtosis(img)`**: Measures skewness and kurtosis  
+- 🗂️ **`getFeatures(path, img=None, display=False)`**: Extracts features from images  
+- 📝 **`getCSVFeatures(path, img=None, display=False)`**: Saves features in CSV format  
+- 🗃️ **`makeCSV()`**: Creates training and testing datasets  
+- 🧩 **`testing(path)`**: Generates features for a single image  
+- 📜 **`readCSV(train_path, test_path, type2=False)`**: Reads CSV data  
+- 🧠 **`multilayer_perceptron(x)`**: Defines the neural network  
+- 📊 **`evaluate(train_path, test_path, type2=False)`**: Trains and evaluates the model  
+- 🚀 **`trainAndTest(rate=0.001, epochs=1700, neurons=7, display=False)`**: Runs training and testing
 
-### Libraries Used
-- `numpy`: For numerical operations.
-- `os`: For interacting with the operating system (file paths, folder creation).
-- `matplotlib`: For image visualization.
-- `scipy.ndimage`: For image processing operations.
-- `skimage.measure.regionprops`: For extracting region properties from binary images.
-- `skimage.io`: For reading images.
-- `skimage.filters.threshold_otsu`: For thresholding images.
-- `tensorflow`: For creating and training neural networks.
-- `pandas`: For handling CSV files.
+## ⚙️ **Workflow:**  
+1. 🖼️ **Image Preprocessing:** Converts and extracts the signature part  
+2. 📏 **Feature Extraction:** Calculates image properties  
+3. 🗃️ **Data Preparation:** Stores features in CSV files  
+4. 🧠 **Model Training:** Uses extracted features as input  
+5. 🧩 **Evaluation:** Tests model performance on datasets
 
-### Functions
+## 💻 **Usage:**  
+1. 📁 **Prepare Data:** Store signature images in `real` and `forged` folders  
+2. 📝 **Create CSV Files:** Run `makeCSV()` to generate datasets  
+3. 🤖 **Train and Evaluate:** Use `trainAndTest()` to start training  
+4. 📸 **Single Image Test:** Use `testing(path)` to evaluate one image  
+5. ⚙️ **Customization:** Modify neural network structure in the code
 
-1. **`rgbgrey(img)`**
-   - Converts RGB images to grayscale.
-   
-2. **`greybin(img)`**
-   - Converts grayscale images to binary using Otsu's thresholding.
-   
-3. **`preproc(path, img=None, display=True)`**
-   - Preprocesses the signature image by converting it to grayscale, binary, and extracting the signature part using a bounding box.
-   
-4. **`Ratio(img)`**
-   - Computes the ratio of white pixels to the total number of pixels in the binary image.
-   
-5. **`Centroid(img)`**
-   - Computes the centroid (center of mass) of the white pixels in the binary image.
-   
-6. **`EccentricitySolidity(img)`**
-   - Computes the eccentricity and solidity of the signature using region properties.
-   
-7. **`SkewKurtosis(img)`**
-   - Computes the skewness and kurtosis of the signature.
-   
-8. **`getFeatures(path, img=None, display=False)`**
-   - Extracts various features from the signature image using the above functions.
-   
-9. **`getCSVFeatures(path, img=None, display=False)`**
-   - Extracts features and formats them for saving to a CSV file.
-   
-10. **`makeCSV()`**
-    - Creates CSV files for training and testing data, containing features and corresponding labels (genuine or forged).
-    
-11. **`testing(path)`**
-    - Creates a CSV file for a test image containing its features.
-    
-12. **`readCSV(train_path, test_path, type2=False)`**
-    - Reads data from CSV files, returning training and testing data.
-    
-13. **`multilayer_perceptron(x)`**
-    - Defines the structure of the neural network model.
-    
-14. **`evaluate(train_path, test_path, type2=False)`**
-    - Trains the neural network and evaluates its performance on training and testing data.
-    
-15. **`trainAndTest(rate=0.001, epochs=1700, neurons=7, display=False)`**
-    - Trains and tests the model with specified hyperparameters and returns average accuracy.
-
-## Workflow
-
-1. **Image Preprocessing:**
-   - Convert RGB image to grayscale.
-   - Convert grayscale image to binary using Otsu's thresholding.
-   - Extract the signature part using a bounding box.
-
-2. **Feature Extraction:**
-   - Extract various features such as ratio, centroid, eccentricity, solidity, skewness, and kurtosis from the preprocessed image.
-
-3. **Data Preparation:**
-   - Create CSV files for training and testing data, including features and labels.
-
-4. **Neural Network Training:**
-   - Train a neural network using the extracted features as input and labels as output.
-
-5. **Evaluation:**
-   - Evaluate the trained model on both training and testing datasets.
-
-## Usage
-
-1. **Training Data Preparation:**
-   - Images of genuine and forged signatures are stored in the "real" and "forged" folders, respectively.
-   - Running `makeCSV()` will create CSV files with features and labels for training and testing.
-
-2. **Model Training and Evaluation:**
-   - Run `trainAndTest()` to train and evaluate the model with specified hyperparameters.
-   - The function outputs average training accuracy, testing accuracy, and time taken for evaluation.
-
-3. **Testing a Single Image:**
-   - Run `testing(path)` to create a CSV file with features for a single test image.
-
-4. **Customization:**
-   - The neural network architecture and hyperparameters can be adjusted in the code for experimentation.
-
-5. **Note:**
-   - The code uses TensorFlow v1, as indicated by `tf.compat.v1`. Consider updating to the latest TensorFlow version if necessary.
-
-## Example Usage
-
+## 💡 **Example:**  
 ```python
-# Set genuine and forged image paths
-genuine_image_paths = "real"
-forged_image_paths = "forged"
-
-# Create CSV files for training and testing
+# Generate CSV files
 makeCSV()
 
-# Provide training person's id and test image path
-train_person_id = input("Enter person's id : ")
-test_image_path = input("Enter path of signature image : ")
+# Input test data
+train_person_id = input("Enter person's ID: ")
+test_image_path = input("Enter image path: ")
 
-# Set paths for training and testing CSV files
+# Paths for training and testing
 train_path = 'Features/Training/training_' + train_person_id + '.csv'
 testing(test_image_path)
 test_path = 'TestFeatures/testcsv.csv'
 
-# Evaluate the trained model
+# Train and evaluate the model
 train_accuracy, test_accuracy, evaluation_time = trainAndTest()
 
-print("Training Accuracy:", train_accuracy)
-print("Testing Accuracy:", test_accuracy)
-print("Time taken for evaluation:", evaluation_time)
+print("✅ Training Accuracy:", train_accuracy)
+print("✅ Testing Accuracy:", test_accuracy)
+print("⏱️ Time Taken:", evaluation_time)
 ```
 
-## Conclusion
+## 📝 **Conclusion:**  
+This system provides an efficient way to detect signature forgeries using neural networks. The modular code structure allows easy customization of neural network parameters, offering flexibility for different datasets.
 
-This documentation provides an overview of the signature forgery detection system, including its code structure, functions, workflow, and example usage. Users can utilize this system for signature forgery detection with customization options for neural network hyperparameters.
